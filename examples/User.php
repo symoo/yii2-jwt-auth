@@ -1,6 +1,6 @@
 <?php
 
-namespace symo\JWTAuth\examples;
+namespace symo\JWT;
 
 use const true;
 use yii\web\IdentityInterface;
