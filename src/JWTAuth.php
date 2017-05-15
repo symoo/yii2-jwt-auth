@@ -14,7 +14,7 @@ use function is_null;
 use function time;
 
 /**
- *
+ * 实现简单 jwt 认证
  */
 class JWTAuth
 {
