@@ -8,8 +8,7 @@
     },
     "autoload": {
         "psr-4": {
-            "symo\\JWTAuth\\": "src/",
-            "symo\\JWT\\": "examples/"
+          "symo\\JWTAuth\\": "src/"
         }
     },
     "license": "MIT",
