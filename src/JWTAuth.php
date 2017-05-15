@@ -47,6 +47,9 @@ class JWTAuth
 
     public function getHostInfo()
     {
+        if (Yii::$app->request->isConsoleRequest) {
+            return $this->hostInfo;
+        }
         $this->hostInfo= is_null(Yii::$app->request->hostInfo) ? $this->hostInfo : Yii::$app->request->hostInfo;
         return $this->hostInfo;
     }
