@@ -1,8 +1,5 @@
 .idea
 /vendor
 composer.lock
-
-
-tests/_output/*
-tests/_output/*
+/examples
 tests/_output/*

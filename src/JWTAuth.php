@@ -31,7 +31,7 @@ class JWTAuth
         if (empty($uid)) {
             throw new JWTException('user id can not be null');
         }
-        $builder = new Builder();
+        $builder = $this->getBuilder();
         $builder->setIssuer($this->getHostInfo());
 //        $builder->setAudience('api');
 //        $builder->setId(123, true);
@@ -43,6 +43,11 @@ class JWTAuth
         $token = $builder->getToken();
 
         return $token;
+    }
+
+    protected function getBuilder()
+    {
+        return new Builder();
     }
 
     public function getHostInfo()
@@ -73,7 +78,7 @@ class JWTAuth
         return $this;
     }
 
-    public function getParser()
+    protected function getParser()
     {
         return new Parser();
     }
@@ -87,5 +92,20 @@ class JWTAuth
             throw new TokenInvalidException();
         }
         return $this->token;
+    }
+
+    public function refresh()
+    {
+        $claims = $this->token->getClaims();
+        $builder = $this->getBuilder();
+        foreach ($claims as $claim => $value) {
+            $builder->set($claim, $value);
+        }
+        $time = time();
+        $builder->setIssuedAt($time);
+        $builder->setNotBefore($time);
+        $builder->setExpiration($this->ttl);
+        $builder->sign($this->getSinger(), $this->getSecret());
+        return $builder->getToken();
     }
 }
