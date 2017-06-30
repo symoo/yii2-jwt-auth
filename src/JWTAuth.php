@@ -25,7 +25,7 @@ class JWTAuth
     /** @var Token */
     private $token;
 
-    public function fromUser(IdentityInterface $user)
+    public function fromUser(IdentityInterface $user, array $claims = [])
     {
         $uid = $user->getId();
         if (empty($uid)) {
@@ -39,6 +39,9 @@ class JWTAuth
         $builder->setSubject($uid);
         $builder->setNotBefore(time());
         $builder->setExpiration(time() + $this->ttl);
+        foreach ($claims as $key => $claim) {
+            $builder->set($key, $claim);
+        }
         $builder->sign($this->getSinger(), $this->getSecret());
         $token = $builder->getToken();
 
